@@ -1,0 +1,53 @@
+# ======================
+# NODE
+# ======================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ======================
+# BUILD
+# ======================
+dist/
+build/
+coverage/
+
+# ======================
+# ENV
+# ======================
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# ======================
+# PRISMA
+# ======================
+backend/prisma/dev.db
+backend/prisma/dev.db-journal
+
+# ======================
+# VITE
+# ======================
+frontend/dist/
+
+# ======================
+# SISTEMA OPERACIONAL
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# IDE
+# ======================
+.vscode/
+.idea/
+
+# ======================
+# LOGS
+# ======================
+logs/
+*.log
