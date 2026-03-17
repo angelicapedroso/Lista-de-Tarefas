@@ -1,5 +1,12 @@
+import { TaskForm } from "./src/components/TaskForm";
+
 function App() {
-  return <h1>lista de Tarefas</h1>;
+  return (
+    <div>
+      <h1>Todo</h1>
+      <TaskForm />
+    </div>
+  );
 }
 
 export default App;
