@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -7,7 +8,11 @@ type Task = {
   createdAt: string;
 };
 
-export function TaskList() {
+type TaskListProps = {
+  reload: boolean;
+};
+
+export function TaskList({ reload }: TaskListProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   async function fetchTasks() {
@@ -17,21 +22,33 @@ export function TaskList() {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [reload]);
 
   return (
-    <div>
-      <h2>Lista de tarefas</h2>
+  <div style={{ marginTop: "20px" }}>
+    <h2>Lista de tarefas</h2>
 
-      {tasks.length === 0 ? (
-        <p>Nenhuma tarefa cadastrada.</p>
-      ) : (
-        <ul>
-          {tasks.map((task) => (
-            <li key={task.id}>{task.title}</li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+    {tasks.length === 0 ? (
+      <p>Nenhuma tarefa cadastrada.</p>
+    ) : (
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {tasks.map((task) => (
+          <li
+            key={task.id}
+            style={{
+              background: "#1e1e1e",
+              padding: "10px 15px",
+              marginBottom: "10px",
+              borderRadius: "6px",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+              textAlign: "left"
+            }}
+          >
+            {task.title}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+);
 }
