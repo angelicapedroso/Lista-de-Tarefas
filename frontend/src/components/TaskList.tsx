@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -33,12 +34,19 @@ export function TaskList({ reload }: TaskListProps) {
   async function handleEdit(id: string, currentTitle: string) {
     const newTitle = window.prompt("Editar tarefa:", currentTitle);
 
-    if (!newTitle || newTitle.trim() === "") {
+    if (!newTitle) {
+      return;
+    }
+
+    const formattedTitle = newTitle.trim();
+
+    if (formattedTitle === "") {
+      alert("O título da tarefa não pode ficar vazio.");
       return;
     }
 
     await axios.put(`http://localhost:3000/tasks/${id}`, {
-      title: newTitle,
+      title: formattedTitle,
     });
 
     fetchTasks();
