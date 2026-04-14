@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -21,7 +20,27 @@ export function TaskList({ reload }: TaskListProps) {
   }
 
   async function handleDelete(id: string) {
+    const confirmDelete = window.confirm("Deseja excluir esta tarefa?");
+
+    if (!confirmDelete) {
+      return;
+    }
+
     await axios.delete(`http://localhost:3000/tasks/${id}`);
+    fetchTasks();
+  }
+
+  async function handleEdit(id: string, currentTitle: string) {
+    const newTitle = window.prompt("Editar tarefa:", currentTitle);
+
+    if (!newTitle || newTitle.trim() === "") {
+      return;
+    }
+
+    await axios.put(`http://localhost:3000/tasks/${id}`, {
+      title: newTitle,
+    });
+
     fetchTasks();
   }
 
@@ -49,23 +68,40 @@ export function TaskList({ reload }: TaskListProps) {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                gap: "10px",
               }}
             >
               <span>{task.title}</span>
 
-              <button
-                onClick={() => handleDelete(task.id)}
-                style={{
-                  background: "#d9534f",
-                  color: "#fff",
-                  border: "none",
-                  padding: "6px 10px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
-              >
-                Excluir
-              </button>
+              <div style={{ display: "flex", gap: "8px" }}>
+                <button
+                  onClick={() => handleEdit(task.id, task.title)}
+                  style={{
+                    background: "#0275d8",
+                    color: "#fff",
+                    border: "none",
+                    padding: "6px 10px",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Editar
+                </button>
+
+                <button
+                  onClick={() => handleDelete(task.id)}
+                  style={{
+                    background: "#d9534f",
+                    color: "#fff",
+                    border: "none",
+                    padding: "6px 10px",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Excluir
+                </button>
+              </div>
             </li>
           ))}
         </ul>
